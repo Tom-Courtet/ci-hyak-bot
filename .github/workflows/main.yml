@@ -25,10 +25,10 @@ jobs:
         docker build -t discord-bot .
 
         # Transférer l'image vers le VPS
-        docker save discord-bot | ssh -o StrictHostKeyChecking=no root@${{ secrets.VPS_IP }} "docker load"
+        docker save discord-bot | ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.VPS_IP }} "docker load"
 
         # Arrêter et relancer le conteneur sur le VPS
-        ssh root@${{ secrets.VPS_IP }} << EOF
+        ssh ubuntu@${{ secrets.VPS_IP }} << EOF
           docker stop discord-bot || true
           docker rm discord-bot || true
           docker run -d \

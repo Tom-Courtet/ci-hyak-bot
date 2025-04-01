@@ -1,6 +1,10 @@
+#!/bin/sh
+
+# Crée le config.json seulement avec les 2 variables obligatoires
+cat <<EOF > config.json
 {
-    "token": "MTM1NjUyOTAwMzk0MjY0NTc3MA.G2kLDg.YDVG85rWGj8YQ3Zg-vh1bCAGxBYy_uORsep69M",
-    "applicationId": "1356529003942645770",
+    "token": "$DISCORD_TOKEN",
+    "applicationId": "$DISCORD_APPLICATION_ID",
     "channelBeta": "1036762035645599755",
     "channelEdit": "954454349210337361",
     "channelBienvenue": "846317312327811092",
@@ -12,6 +16,10 @@
     "roleAndroid": "949360235011776533",
     "roleGenshin": "948247223894954074",
     "roleBeta": "1036572391201054730",
-    "logoUrl": "https://cdn-hyakanime.s3.eu-west-3.amazonaws.com/logo-hyakanime.png",
+    "logoUrl": "https://cdn-hyakanime.s3.eu-west-3.amazonaws.com/logo-hyakanime.png", 
     "urlEndpoint": "https://api-v3.hyakanime.fr"
 }
+EOF
+
+node deploy-commands.js
+node index.js

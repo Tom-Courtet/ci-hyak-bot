@@ -26,14 +26,16 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy on VPS
-      run: ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.VPS_IP }} "
-        sudo docker login -u '${{ secrets.DOCKER_USERNAME }}' -p '${{ secrets.DOCKER_PASSWORD }}' &&
-        sudo docker pull ${{ secrets.DOCKER_USERNAME }}/discord-bot:latest &&
-        sudo docker stop discord-bot || true &&
-        sudo docker rm discord-bot || true &&
-        sudo docker run -d \
-          --name discord-bot \
-          --restart unless-stopped \
-          -e DISCORD_TOKEN="${{ secrets.DISCORD_TOKEN }}" \
-          -e DISCORD_APPLICATION_ID="${{ secrets.DISCORD_APPLICATION_ID }}" \
-          ${{ secrets.DOCKER_USERNAME }}/discord-bot:latest
+      run: |
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.VPS_IP }} "
+          sudo docker login -u '${{ secrets.DOCKER_USERNAME }}' -p '${{ secrets.DOCKER_PASSWORD }}' &&
+          sudo docker pull '${{ secrets.DOCKER_USERNAME }}/discord-bot:latest' &&
+          sudo docker stop discord-bot || true &&
+          sudo docker rm discord-bot || true &&
+          sudo docker run -d \\
+            --name discord-bot \\
+            --restart unless-stopped \\
+            -e DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}' \\
+            -e DISCORD_APPLICATION_ID='${{ secrets.DISCORD_APPLICATION_ID }}' \\
+            '${{ secrets.DOCKER_USERNAME }}/discord-bot:latest'
+        "

@@ -34,6 +34,6 @@ jobs:
         sudo docker run -d \
           --name discord-bot \
           --restart unless-stopped \
-          -e DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}' \
-          -e DISCORD_APPLICATION_ID='${{ secrets.DISCORD_APPLICATION_ID }}' \
-          ${{ secrets.DOCKER_USERNAME }}/discord-bot:latest"
+          -e DISCORD_TOKEN="${{ secrets.DISCORD_TOKEN }}" \
+          -e DISCORD_APPLICATION_ID="${{ secrets.DISCORD_APPLICATION_ID }}" \
+          ${{ secrets.DOCKER_USERNAME }}/discord-bot:latest

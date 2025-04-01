@@ -2,14 +2,15 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copiez directement les fichiers du repo (plutôt que de cloner)
+# Copiez seulement package.json d'abord
 COPY package.json .
-COPY package-lock.json .
+
+# Installez les dépendances sans lockfile
 RUN npm install
 
+# Copiez le reste des fichiers
 COPY . .
 
-# On rend le script executable
 RUN chmod +x entrypoint.sh
 
 CMD ["./entrypoint.sh"]

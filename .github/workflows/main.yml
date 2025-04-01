@@ -27,11 +27,11 @@ jobs:
 
     - name: Deploy on VPS
       run: ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.VPS_IP }} "
-        docker login -u '${{ secrets.DOCKER_USERNAME }}' -p '${{ secrets.DOCKER_PASSWORD }}' &&
-        docker pull ${{ secrets.DOCKER_USERNAME }}/discord-bot:latest &&
-        docker stop discord-bot || true &&
-        docker rm discord-bot || true &&
-        docker run -d \
+        sudo docker login -u '${{ secrets.DOCKER_USERNAME }}' -p '${{ secrets.DOCKER_PASSWORD }}' &&
+        sudo docker pull ${{ secrets.DOCKER_USERNAME }}/discord-bot:latest &&
+        sudo docker stop discord-bot || true &&
+        sudo docker rm discord-bot || true &&
+        sudo docker run -d \
           --name discord-bot \
           --restart unless-stopped \
           -e DISCORD_TOKEN='${{ secrets.DISCORD_TOKEN }}' \

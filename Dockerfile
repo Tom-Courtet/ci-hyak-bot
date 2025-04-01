@@ -1,14 +1,16 @@
-FROM node:18-alpine
+FROM node:18-bullseye
 
 WORKDIR /app
 
-# Copiez seulement package.json d'abord
 COPY package.json .
+COPY package-lock.json .
 
-# Installez les dépendances sans lockfile
-RUN npm install
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3 \
+    && npm install \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copiez le reste des fichiers
 COPY . .
 
 RUN chmod +x entrypoint.sh
